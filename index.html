@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f4f1e9" />
+  <title>轻排 · 中文 TXT 自动排版</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="app">
+    <section id="inputView" class="view view-active" aria-labelledby="appTitle">
+      <header class="hero">
+        <p class="eyebrow">轻量化中文排版</p>
+        <h1 id="appTitle">把难读的 TXT，整理成能读的页面。</h1>
+        <p class="hero-copy">文本只在当前浏览器中处理，不会上传到服务器。</p>
+      </header>
+
+      <div class="input-card">
+        <label class="field-label" for="sourceText">粘贴纯文本</label>
+        <textarea id="sourceText" placeholder="把小说、文章或其他中文纯文本粘贴到这里……" spellcheck="false"></textarea>
+
+        <div class="input-actions">
+          <button id="uploadButton" class="secondary-button file-button" type="button">
+            <span>上传 TXT</span>
+          </button>
+          <input id="fileInput" type="file" accept=".txt,text/plain" hidden />
+          <button id="clearButton" class="text-button" type="button">清空</button>
+        </div>
+
+        <div id="fileStatus" class="file-status" aria-live="polite"></div>
+        <button id="formatButton" class="primary-button" type="button">开始排版</button>
+      </div>
+    </section>
+
+    <section id="previewView" class="view" aria-label="排版预览">
+      <header class="preview-header">
+        <button id="backButton" class="icon-button" type="button" aria-label="返回输入页">‹</button>
+        <div class="preview-title-wrap">
+          <strong id="documentName">未命名文本</strong>
+          <span id="documentMeta">0 字</span>
+        </div>
+        <button id="restoreButton" class="text-button" type="button">原始换行</button>
+      </header>
+
+      <div id="previewScroller" class="preview-scroller">
+        <article id="paper" class="paper template-comfort theme-ivory font-serif size-medium spacing-standard" aria-live="polite"></article>
+      </div>
+
+      <nav class="bottom-nav" aria-label="排版工具">
+        <button type="button" data-sheet="templateSheet">模板</button>
+        <button type="button" data-sheet="adjustSheet">微调</button>
+        <button type="button" data-sheet="exportSheet">导出</button>
+      </nav>
+    </section>
+  </main>
+
+  <div id="sheetBackdrop" class="sheet-backdrop" hidden></div>
+
+  <section id="templateSheet" class="bottom-sheet" aria-label="模板选择" aria-hidden="true">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h2>选择模板</h2>
+      <button class="sheet-close icon-button" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="template-grid">
+      <button class="template-card is-selected" type="button" data-template="comfort">
+        <span class="template-sample sample-comfort">舒适</span>
+        <strong>舒适阅读</strong>
+        <small>默认，适合长文</small>
+      </button>
+      <button class="template-card" type="button" data-template="book">
+        <span class="template-sample sample-book">书籍</span>
+        <strong>书籍正文</strong>
+        <small>首行缩进，版心较窄</small>
+      </button>
+      <button class="template-card" type="button" data-template="article">
+        <span class="template-sample sample-article">文章</span>
+        <strong>简洁文章</strong>
+        <small>段落清楚，标题突出</small>
+      </button>
+      <button class="template-card" type="button" data-template="compact">
+        <span class="template-sample sample-compact">紧凑</span>
+        <strong>紧凑打印</strong>
+        <small>减少页数和空白</small>
+      </button>
+    </div>
+  </section>
+
+  <section id="adjustSheet" class="bottom-sheet" aria-label="排版微调" aria-hidden="true">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h2>微调</h2>
+      <button class="sheet-close icon-button" type="button" aria-label="关闭">×</button>
+    </div>
+
+    <div class="setting-group">
+      <span class="setting-label">字体</span>
+      <div class="segmented" data-setting="font">
+        <button class="is-selected" type="button" data-value="serif">宋体</button>
+        <button type="button" data-value="sans">黑体</button>
+        <button type="button" data-value="kai">楷体</button>
+        <button type="button" data-value="system">系统</button>
+      </div>
+    </div>
+
+    <div class="setting-group">
+      <span class="setting-label">字号</span>
+      <div class="segmented" data-setting="size">
+        <button type="button" data-value="small">小</button>
+        <button class="is-selected" type="button" data-value="medium">中</button>
+        <button type="button" data-value="large">大</button>
+      </div>
+    </div>
+
+    <div class="setting-group">
+      <span class="setting-label">行距</span>
+      <div class="segmented" data-setting="spacing">
+        <button type="button" data-value="compact">紧凑</button>
+        <button class="is-selected" type="button" data-value="standard">标准</button>
+        <button type="button" data-value="loose">宽松</button>
+      </div>
+    </div>
+
+    <div class="setting-group">
+      <span class="setting-label">页面</span>
+      <div class="segmented" data-setting="theme">
+        <button type="button" data-value="white">白色</button>
+        <button class="is-selected" type="button" data-value="ivory">米色</button>
+        <button type="button" data-value="dark">深色</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="exportSheet" class="bottom-sheet" aria-label="导出" aria-hidden="true">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h2>导出</h2>
+      <button class="sheet-close icon-button" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="export-list">
+      <button id="printButton" type="button">
+        <span><strong>PDF / 打印</strong><small>调用浏览器打印，可保存为 PDF</small></span>
+        <b>›</b>
+      </button>
+      <button id="imageButton" type="button">
+        <span><strong>长图</strong><small>生成图片后可长按保存</small></span>
+        <b>›</b>
+      </button>
+      <button id="copyButton" type="button">
+        <span><strong>复制整理后的文本</strong><small>保留标题与自然段</small></span>
+        <b>›</b>
+      </button>
+    </div>
+  </section>
+
+  <dialog id="imageDialog" class="image-dialog">
+    <div class="dialog-header">
+      <strong>长图预览</strong>
+      <button id="closeImageDialog" class="icon-button" type="button" aria-label="关闭">×</button>
+    </div>
+    <p>手机端可长按图片保存；桌面端可右键保存。</p>
+    <div id="imageOutput" class="image-output"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js?v=4.0.0"></script>
+</body>
+</html>
