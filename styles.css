@@ -176,29 +176,99 @@ textarea::placeholder { color: #aaa69e; }
 .theme-ivory { background: #fbf7ed; color: #26231f; }
 .theme-dark { background: #1c1c1b; color: #ddd9cf; color-scheme: dark; }
 
-.template-comfort p + p { margin-top: .9em; }
+.template-comfort .paragraph + .paragraph { margin-top: .9em; }
 .template-comfort .heading { margin: 2.2em 0 1em; font-size: 1.38em; line-height: 1.45; }
 .template-comfort .heading:first-child { margin-top: 0; }
 .template-comfort .divider { margin: 1.8em 0; }
 
 .template-book { max-width: 660px; }
-.template-book p:not(.heading):not(.divider) { text-indent: 2em; }
-.template-book p + p { margin-top: .35em; }
+.template-book .paragraph { text-indent: 2em; }
+.template-book .paragraph + .paragraph { margin-top: .35em; }
 .template-book .heading { margin: 2.4em 0 1.3em; text-align: center; font-size: 1.28em; letter-spacing: .08em; }
 .template-book .heading:first-child { margin-top: 0; }
 .template-book .divider { margin: 2em 0; }
 
-.template-article p + p { margin-top: 1.25em; }
+.template-article .paragraph + .paragraph { margin-top: 1.25em; }
 .template-article .heading { margin: 2.1em 0 .7em; padding-bottom: .45em; border-bottom: 1px solid currentColor; font-size: 1.5em; line-height: 1.35; }
 .template-article .heading:first-child { margin-top: 0; }
 .template-article .divider { margin: 2em 0; }
 
 .template-compact { padding: 34px clamp(20px, 5vw, 48px) 48px; }
-.template-compact p:not(.heading):not(.divider) { text-indent: 2em; }
-.template-compact p + p { margin-top: .15em; }
+.template-compact .paragraph { text-indent: 2em; }
+.template-compact .paragraph + .paragraph { margin-top: .15em; }
 .template-compact .heading { margin: 1.6em 0 .7em; font-size: 1.2em; }
 .template-compact .heading:first-child { margin-top: 0; }
 .template-compact .divider { margin: 1.4em 0; }
+
+/* 标题层级在不同模板中保留各自的版式性格，只统一控制视觉权重。 */
+.paper .heading-title {
+  margin: .2em 0 1.4em;
+  font-size: 1.9em;
+  line-height: 1.3;
+  text-align: center;
+  letter-spacing: .06em;
+}
+.paper .heading-subtitle {
+  margin: -1.5em 0 2.2em;
+  font-size: 1.08em;
+  line-height: 1.55;
+  text-align: center;
+  font-weight: 520;
+  opacity: .72;
+}
+.paper .heading-1 {
+  margin: 2.8em 0 1.35em;
+  font-size: 1.55em;
+  line-height: 1.35;
+  text-align: center;
+  letter-spacing: .04em;
+}
+.paper .heading-2 { font-size: 1.34em; line-height: 1.42; }
+.paper .heading-3 { font-size: 1.16em; line-height: 1.5; }
+.paper .heading-4 { font-size: 1.05em; line-height: 1.55; opacity: .88; }
+.paper .heading-title:first-child,
+.paper .heading-1:first-child,
+.paper .heading-2:first-child,
+.paper .heading-3:first-child,
+.paper .heading-4:first-child { margin-top: 0; }
+
+.paper .gap-before-2 { margin-top: 1.8em; }
+.paper .list-item {
+  margin-top: .55em;
+  padding-left: 1.7em;
+  text-indent: -1.7em;
+}
+.paper .question {
+  margin-top: 1.15em;
+  font-weight: 680;
+}
+.paper .option {
+  margin-top: .28em;
+  padding-left: 1.6em;
+}
+.paper .answer {
+  margin-top: .65em;
+  padding: .7em .9em;
+  border-left: 3px solid currentColor;
+  background: color-mix(in srgb, currentColor 5%, transparent);
+  font-size: .94em;
+  opacity: .88;
+}
+.paper .callout {
+  margin: 1em 0;
+  padding: .75em .9em;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 8px;
+  font-weight: 650;
+}
+.paper .inline-emphasis {
+  margin-inline: .08em;
+  padding: .08em .3em;
+  border-radius: .3em;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  font-size: .88em;
+  font-weight: 760;
+}
 
 .bottom-nav {
   position: fixed;
@@ -348,4 +418,6 @@ textarea::placeholder { color: #aaa69e; }
     background: #fff !important;
     color: #000 !important;
   }
+  .paper p { orphans: 2; widows: 2; }
+  .paper .heading { break-after: avoid; break-inside: avoid; }
 }

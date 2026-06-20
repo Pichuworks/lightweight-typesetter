@@ -36,6 +36,14 @@ python3 -m http.server 8080
 http://localhost:8080
 ```
 
+## 解析回归测试
+
+测试语料位于项目同级的 `typesetter-test-corpus-v1` 目录时，可运行：
+
+```bash
+node tests/parser-corpus.test.js
+```
+
 ## 当前边界
 
 - 标题和段落识别使用本地规则，不接入 AI。
